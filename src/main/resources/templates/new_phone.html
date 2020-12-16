@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Phone</title>
+    <link rel="stylesheet" href="../static/bootstrap.css" th:href="@{/bootstrap.css}"/>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-default" style="background-color: #00CED1">
+            <div class="container-fluid">
+               <div class="navbar-header">
+                  <a class="navbar-brand" href="a">MobileShop</a>
+             </div>
+              <p class="navbar-text navbar-right" th:text="'Signed in as ' + ${username}" style="margin-right: 10px">Signed in as Anonymous</p>
+            </div>
+        </nav>
+    </header>
+    <div align="center">
+        <h1>Add New Phone</h1>
+        <br/>
+        <form th:onsubmit="return validateForm()" th:id="addForm" action="#" th:action="@{/add}" th:object="${phone}" method="post">
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>Phone name:</td>
+                    <td><label>
+                        <input th:id="phoneNameInput" type="text" th:field="*{phoneName}"/>
+                    </label></td>
+                    <td><p th:id="phoneNameWarning" style="color: #ac2925"></p></td>
+                </tr>
+                <tr>
+                    <td>Brand:</td>
+                    <td><label>
+                        <input th:id="brandInput" type="text" th:field="*{brand}"/>
+                    </label></td>
+                    <td><p th:id="brandWarning" style="color: #ac2925"></p></td>
+                </tr>
+                <tr>
+                    <td>Price:</td>
+                    <td>
+                        <label>
+                        <input th:id="priceInput" type="text" th:field="*{price}"/>
+                        </label>
+                    </td>
+                    <td><p th:id="priceWarning" style="color: #ac2925"></p></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button th:id="submitButton" type="submit">Save</button></td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+    <footer class="footer" style="position:absolute; bottom:0;background-color: #00CED1">
+        <div class="container">
+            <p th:text="${datetime}" class="text-muted">Page was rendered today!</p>
+        </div>
+    </footer>
+
+    <script>
+        function validateForm(){
+            var phoneName = document.getElementById("phoneNameInput").value;
+            var brand = document.getElementById("brandInput").value;
+            var price = document.getElementById("priceInput").value;
+            var phoneNameWarning = document.getElementById("phoneNameWarning");
+            var brandWarning = document.getElementById("brandWarning");
+            var priceWarning = document.getElementById("priceWarning");
+            var formCheck = true;
+            var regex = /^[0-9]+\.?[0-9]*$/i;
+
+            if(!phoneName.replace(/\s/g, '').length){
+                phoneNameWarning.innerHTML = "Please introduce a phone name!";
+                formCheck = false;
+            }else{
+                phoneNameWarning.innerHTML = null;
+
+            }
+
+            if(!brand.replace(/\s/g, '').length){
+                brandWarning.innerHTML = "Please introduce a brand!";
+                formCheck = false;
+            }else{
+                brandWarning.innerHTML = null;
+
+            }
+
+            if(!price.replace(/\s/g, '').length){
+                priceWarning.innerHTML = "Please introduce a price!";
+                formCheck = false;
+                return formCheck;
+
+            }else{
+                priceWarning.innerHTML = null;
+
+            }
+
+            if(price <= 0){
+                priceWarning.innerHTML = "Please introduce a price higher than 0!";
+                formCheck = false;
+                return formCheck;
+
+            }else{
+                priceWarning.innerHTML = null;
+
+            }
+
+            if(!regex.test(price)){
+                priceWarning.innerHTML = "Please introduce a valid price!";
+                formCheck = false;
+                return formCheck;
+
+            }else{
+                priceWarning.innerHTML = null;
+
+            }
+
+            return formCheck;
+        }
+
+    </script>
+
+</body>
+</html>

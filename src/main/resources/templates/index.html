@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PhoneStore App</title>
+    <link rel="stylesheet" href="../static/bootstrap.css" th:href="@{/bootstrap.css}"/>
+    <script type="text/javascript" src="/static/angular.min.js" th:src="@{angular.min.js}"></script>
+    <script type="text/javascript" src="/static/app/app.module.js" th:src="@{app/app.module.js}"></script>
+    <script type="text/javascript" src="/static/app/phones.controller.js" th:src="@{app/phones.controller.js}"></script>
+</head>
+<body ng-app="app" ng-controller="PhoneController as vm">
+<header>
+    <nav class="navbar navbar-default" style="background-color: #00CED1">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" >MobileShop Demo</a>
+            </div>
+            <p class="navbar-text navbar-right" th:text="'Signed in as ' + ${username}" style="margin-right: 10px">Signed in as Anonymous</p>
+        </div>
+    </nav>
+</header>
+<div align="center">
+    <a th:id="newPhoneHref" href="new">Create New Phone</a>
+    <br/><br/>
+</div>
+<div>
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+            <div class="btn-group" role="group">
+                <button th:id="listAllButton" ng-click="vm.listAllPhones()" type="button" class="btn btn-default">All</button>
+                <button th:id="listFilterButton" ng-click="vm.listFilterPhones()" type="button" class="btn btn-default">Affordable</button>
+                <label>
+                    <input type="text" class="btn btn-default" th:id="affordablePriceInput"/>
+                </label>
+                <p th:id="priceWarning" style="color: #ac2925"> </p>
+            </div>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Phone</th>
+                    <th>Brand</th>
+                    <th>Price</th>
+                    <th style="width:90px"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:id="phonesList" ng-repeat="phone in vm.phones">
+                    <td id="id{{$index}}">{{phone.id}}</td>
+                    <td id="phoneName{{$index}}">{{phone.phoneName}}</td>
+                    <td id="brand{{$index}}">{{phone.brand}}</td>
+                    <td id="price{{$index}}">{{phone.price}}</td>
+                    <td>
+                        <button id="{{$index}}" class="btn btn-danger" ng-click="vm.removePhone(phone.id)">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer class="footer" style="position:absolute; bottom:0;background-color: #00CED1">
+    <div class="container">
+        <p th:text="${datetime}" class="text-muted">Page was rendered today!</p>
+    </div>
+
+</footer>
+
+</body>
+</html>
